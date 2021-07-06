@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>21 paskaita</title>
+</head>
+
+<body>
+
+    <div class="krastines">
+        <input type="text" id="akrastine" name="akrastine">
+        <input type="text" id="bkrastine" name="bkrastine">
+        <input type="text" id="ckrastine" name="ckrastine">
+        <button id="patvirtinti">Patvirtinti</button>
+    </div>
+
+    <div class="testavimas">
+        <button id="testuok">Testuoti programa</button>
+    </div>
+    
+    <script>
+        "use strict";
+
+
+        //ar galim sudaryti trikampi - trikampioSudarymas()
+        //kategorija pagal krastine - kategorijaKrastine()
+        //kategorija pagal kampa - kategorijaKampas()
+
+        function atsitiktinis(intervaloPradzia, intervaloPabaiga) {
+            return Math.floor(Math.random() * (intervaloPabaiga - intervaloPradzia + 1)) + intervaloPradzia;
+
+            
+        }
+
+        function trikampioSudarymas(trikampis) {
+
+            var tikrinimas = false;
+            if ((trikampis[0] < trikampis[1] + trikampis[2]) && (trikampis[1] < trikampis[0] + trikampis[2]) && (trikampis[2] < trikampis[1] + trikampis[0])) {
+                tikrinimas = true;
+            }
+            return tikrinimas;
+
+        }
+
+        function kategorijaKrastine(trikampis) {
+            var a = trikampis[0];
+            var b = trikampis[1];
+            var c = trikampis[2];
+
+
+
+            if (a != b && b != c && c != a) {
+                console.log("Trikampis yra ivairiakrastis");
+            } else if (a == b && b == c && a == c) {
+                console.log("Trikampis yra lygiakrastis");
+            } else {
+                console.log("Trikampis yra lygiasonis");
+
+            }
+
+
+        }
+
+        function kategorijaKampas(trikampis) {
+            var a = trikampis[0];
+            var b = trikampis[1];
+            var c = trikampis[2];
+
+            if ((b * b + c * c == a * a) || (a * a + c * c == b * b) || (a * a + b * b == c * c)) {
+                console.log("Trikampis yra status");
+
+            }
+            else if ((b * b + c * c < a * a) || (a * a) + (c * c) < (b * b) || (a * a) + (b * b) < (c * c)) {
+                console.log("Trikampis yra bukasis");
+            }
+            else {
+                console.log("Trikampis yra smailusis");
+            }
+
+        }
+
+        function programosPaleidimas(a, b, c) {
+            var trikampis = [a, b, c];
+
+            if (trikampioSudarymas(trikampis)) {
+                console.log("Trikampi sudaryti galima");
+                kategorijaKrastine(trikampis); //neturetu grazint, nes atvaizduoja informacija
+                kategorijaKampas(trikampis);
+
+            } else {
+                console.log("Trikampio sudaryti negalima");
+            }
+
+        }
+
+        function testavimoFunkscija() {
+            //ciklas, kuris paleidzia programos paleidima n kartu
+            //atsitikrine tvarka susigeneruoti trikampio krastines
+
+            //duomenis masyvo/-u 3
+
+            // Duomenu masyvo generavimas
+
+            var aTest = [];
+            var bTest = [];
+            var cTest = [];
+
+            //turime 3 krastiniu rinkinius po 100 elementu
+            //susigeneravome testiniu duomenu masyvus
+            for (var i = 0; i < 100; i++) {
+                var atsitiktinisSk = atsitiktinis(0, 10000);
+                aTest.push(atsitiktinisSk);
+
+                atsitiktinisSk = atsitiktinis(0, 10000);
+                bTest.push(atsitiktinisSk);
+
+                atsitiktinisSk = atsitiktinis(0, 10000);
+                cTest.push(atsitiktinisSk);
+            }
+
+            // console.log(aTest);
+            // console.log(bTest);
+            // console.log(cTest);
+
+
+            for (var i = 0; i < aTest.length; i++) {
+                programosPaleidimas(aTest[i], bTest[i], cTest[i]);
+            }
+
+            // programosPaleidimas(3, 4, 5);
+            // programosPaleidimas(4, 4, 6);
+            // programosPaleidimas(5, 4, 3);
+            // programosPaleidimas(3, 3, 3);
+            // programosPaleidimas(6, 8, 10);
+
+            //iškviesti mygtuku
+
+        }
+
+        document.querySelector("#patvirtinti").addEventListener("click", function () {
+            var a = parseFloat(document.querySelector("#akrastine").value);
+            var b = parseFloat(document.querySelector("#bkrastine").value);
+            var c = parseFloat(document.querySelector("#ckrastine").value);
+            programosPaleidimas(a, b, c);
+        });
+
+        document.querySelector("#testuok").addEventListener("click", function () {
+            testavimoFunkscija();
+        });
+
+    </script>
+</body>
+
+</html>
